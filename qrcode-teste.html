@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QR Code de Teste — Kit Cirúrgico</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f4f8;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+      padding: 32px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+    }
+    .header {
+      background: linear-gradient(135deg, #1a73e8, #0d47a1);
+      color: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .header p {
+      font-size: 13px;
+      opacity: 0.85;
+    }
+    .badge {
+      display: inline-block;
+      background: #e8f5e9;
+      color: #2e7d32;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      border: 1px solid #a5d6a7;
+    }
+    #qrcode {
+      display: flex;
+      justify-content: center;
+      margin: 16px 0 24px 0;
+    }
+    #qrcode canvas {
+      border-radius: 12px;
+      border: 3px solid #e3f2fd;
+      padding: 8px;
+    }
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+    .info-table tr {
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .info-table tr:last-child {
+      border-bottom: none;
+    }
+    .info-table td {
+      padding: 10px 8px;
+      font-size: 14px;
+    }
+    .info-table td:first-child {
+      color: #888;
+      font-weight: 600;
+      width: 40%;
+      font-size: 13px;
+    }
+    .info-table td:last-child {
+      color: #222;
+      font-weight: 500;
+    }
+    .highlight {
+      background: #fff8e1;
+      border-radius: 6px;
+      padding: 2px 6px;
+      color: #e65100;
+      font-weight: 700;
+    }
+    .btn-print {
+      background: linear-gradient(135deg, #1a73e8, #0d47a1);
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom: 12px;
+      transition: opacity 0.2s;
+    }
+    .btn-print:hover { opacity: 0.9; }
+    .footer {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 8px;
+    }
+
+    @media print {
+      body { background: white; }
+      .btn-print { display: none; }
+      .card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <h1>🏥 Kit Cirúrgico — QR Code</h1>
+      <p>Página de Teste do Sistema</p>
+    </div>
+
+    <div class="badge">✅ DADOS FICTÍCIOS — APENAS PARA TESTE</div>
+
+    <div id="qrcode"></div>
+
+    <table class="info-table">
+      <tr>
+        <td>👤 Paciente</td>
+        <td>João Teste da Silva</td>
+      </tr>
+      <tr>
+        <td>🏥 Prontuário</td>
+        <td><span class="highlight">#99001</span></td>
+      </tr>
+      <tr>
+        <td>🔪 Cirurgia</td>
+        <td>Cirurgia de Teste</td>
+      </tr>
+      <tr>
+        <td>🚪 Sala</td>
+        <td>Sala 01 — Bloco A</td>
+      </tr>
+      <tr>
+        <td>⏰ Horário</td>
+        <td>10h00 — 18/03/2026</td>
+      </tr>
+      <tr>
+        <td>📦 Lote</td>
+        <td><span class="highlight">KIT-2026-0314-03</span></td>
+      </tr>
+      <tr>
+        <td>✅ Validade</td>
+        <td>12/04/2026</td>
+      </tr>
+      <tr>
+        <td>👩‍⚕️ Responsável</td>
+        <td>Enf. Patrícia M.</td>
+      </tr>
+    </table>
+
+    <button class="btn-print" onclick="window.print()">🖨️ Imprimir QR Code</button>
+
+    <p class="footer">Sistema de Rastreamento de Kits Cirúrgicos — lannesandrade-svg</p>
+  </div>
+
+  <script>
+    const dados = {
+      paciente: "João Teste da Silva",
+      prontuario: "#99001",
+      cirurgia: "Cirurgia de Teste",
+      sala: "Sala 01 — Bloco A",
+      horario: "10h00 — 18/03/2026",
+      lote: "KIT-2026-0314-03",
+      validade: "12/04/2026",
+      responsavel: "Enf. Patrícia M."
+    };
+
+    const texto = Object.entries(dados)
+      .map(([k, v]) => `${k}: ${v}`)
+      .join(" | ");
+
+    QRCode.toCanvas(document.createElement('canvas'), texto, {
+      width: 220,
+      margin: 2,
+      color: { dark: '#0d47a1', light: '#ffffff' }
+    }, function (err, canvas) {
+      if (!err) document.getElementById('qrcode').appendChild(canvas);
+    });
+  </script>
+</body>
+</html>
